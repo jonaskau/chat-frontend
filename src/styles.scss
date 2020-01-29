@@ -1,1 +1,73 @@
 /* You can add global styles to this file, and also import other style files */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-size: 20px;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    color: var(--font-color);
+}
+
+:root {
+    //colors:
+    --font-color: rgb(121,90,58);
+    --contrast-color: rgb(233,196,133);
+    --headline-color: white;
+    --announcement-background-color: rgb(230,230,230);
+
+    //happy
+    --yellow: #f8e9a1;
+    --red: #f76c6c;
+    --lightblue: #a8d0e6;
+    --blue: #374785;
+    --darkblue: #24305e;
+    //minimal yet warm
+    --eggshell: #eae7dc;
+    --vanilla: #d8c3a5;
+    --gray: #8e8d8a;
+    --lightjellyred: #e98074;
+    --jellyred: #e85a4f;
+
+}
+
+.header-authenticate {
+    font-size: 12vw;
+    color: var(--vanilla);
+    text-align: center;
+}
+.form-authenticate {
+    margin: auto;
+    width: 500px;
+    padding: 10px;
+    max-width: 100%;
+}
+.button-authenticate, 
+.input-authenticate {
+    width: 100%;
+    height: 30px;
+    border-radius: 3px;
+    padding: 2px;
+    border: none;
+}
+
+.button-authenticate:focus, 
+.input-authenticate:focus, 
+.button-authenticate:hover {
+    //box-shadow: 0 0 4px 2px rgba(0,0,0,0.2);
+    outline-width: 0;
+}
+
+.red-color {
+    color: var(--jellyred);
+}
+
+.vanilla-color {
+    color: var(--vanilla);
+}
+
+.eggshell-color {
+    color: var(--eggshell);
+}

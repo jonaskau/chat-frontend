@@ -1,0 +1,9 @@
+.button-authenticate, 
+.input-authenticate {
+    background-color: var(--eggshell) !important;
+}
+
+input:-webkit-autofill, 
+input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 100px var(--eggshell) inset;
+}

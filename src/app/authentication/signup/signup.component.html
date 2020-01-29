@@ -1,0 +1,41 @@
+<h1 class="header-authenticate eggshell-color">sign up</h1>
+<br><br>
+<form 
+    class="form-authenticate" 
+    [formGroup]="signUpForm" 
+    (ngSubmit)="onSubmit()" 
+    autocomplete="off">
+    <label>
+        <p>username:</p>
+        <input 
+            class="input-authenticate" 
+            type="text" 
+            formControlName="username" 
+            placeholder="username" 
+            autocomplete="off">
+    </label>
+    <label>
+        <p>password:</p>
+        <input 
+            class="input-authenticate" 
+            type="password" 
+            formControlName="password" 
+            placeholder="password" 
+            autocomplete="off">
+    </label>
+    <label>
+        <p>confirm password:</p>
+        <input 
+            class="input-authenticate" 
+            type="password" 
+            formControlName="confirmPassword" 
+            placeholder="password" 
+            autocomplete="off">
+    </label>
+    <br><br>
+    <button 
+        class="button-authenticate" 
+        type="submit" 
+        [disabled]="!signUpForm.valid">sign up</button>
+    <p *ngIf="usernameAlreadyTaken" class="red-color"><br>Username already taken!</p>
+</form>

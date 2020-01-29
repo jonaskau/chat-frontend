@@ -1,0 +1,32 @@
+<h1 class="header-authenticate vanilla-color">sign in</h1>
+<br><br>
+<form 
+    class="form-authenticate" 
+    [formGroup]="signInForm" 
+    (ngSubmit)="onSubmit()" 
+    autocomplete="off">
+    <label>
+        <p>username:</p>
+        <input 
+            class="input-authenticate" 
+            type="text" 
+            formControlName="username" 
+            placeholder="username" 
+            autocomplete="off">
+    </label>
+    <label>
+        <p>password:</p>
+        <input 
+            class="input-authenticate" 
+            type="password" 
+            formControlName="password" 
+            placeholder="password" 
+            autocomplete="off">
+    </label>
+    <br><br>
+    <button 
+        class="button-authenticate" 
+        type="submit" 
+        [disabled]="!signInForm.valid">sign in</button>
+    <p *ngIf="wrongCredentials" class="red-color"><br>Wrong credentials!</p>
+</form>
