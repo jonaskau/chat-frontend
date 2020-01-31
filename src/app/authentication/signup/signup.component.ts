@@ -29,14 +29,12 @@ export class SignupComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.signUpForm.value)
     this.authService.signUp(this.signUpForm.value)
   }
 
   passwordConfirmValidator(control: FormGroup): ValidationErrors | null {
     const password = control.get('password');
     const confirmPassword = control.get('confirmPassword');
-    console.log(password.value)
     return password.value != confirmPassword.value ? { 'passwordNotConfirmed': true } : null;
   };
 }

@@ -1,0 +1,49 @@
+#navigation {
+    position: absolute;
+    width: 30%;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    background-color: rgba(216, 195, 165, 0.4);
+}
+
+#addChat, #chatList, #logout {
+    position: absolute;
+    width: 100%;
+    left: 0;
+}
+
+#addChat {
+    top: 0;
+}
+
+#chatList {
+    top: var(--bar-height);
+    bottom: var(--bar-height);
+    list-style-type: none;
+
+    li {
+        width: 100%;
+        height: var(--bar-height);
+        font-size: 20px;
+        background-color: rgba(216, 195, 165, 0.2);
+    }
+}
+
+#logout {
+    bottom: 0;
+}
+
+button {
+    height: var(--bar-height);
+    background-color: var(--vanilla);
+    border: none;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 25px;
+}
+
+
+button:focus, button:hover {
+    outline-width: 0;
+    height: 54px;
+}

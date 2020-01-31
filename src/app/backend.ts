@@ -3,7 +3,9 @@ import { Observable, of } from 'rxjs';
 
 export class Backend {
 
-    protected Url = 'http://localhost:8080/'
+    private host = 'localhost:8080/';
+    protected Url = `http://${this.host}`;
+    protected wsUrl = `ws://${this.host}createWSConnection`;
 
     constructor() {}
 

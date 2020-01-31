@@ -1,13 +1,15 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ChatComponent } from './chat/chat.component';
-import { ChatGuard } from './chat/chat.guard';
+import { ChatGuard } from './authentication/chat.guard';
 import { AuthenticationComponent } from './authentication/authentication.component';
 import { AuthGuard } from './authentication/auth.guard';
+import { ChatRoutes } from './chat/chat.routes';
 
 
 const routes: Routes = [
-  { path: "", component: ChatComponent, canActivate: [ChatGuard]},
+  { path: "", redirectTo: '/chat', pathMatch: 'full'},
+  { path: "chat", component: ChatComponent, children: ChatRoutes, canActivate: [ChatGuard]},
   { path: "authenticate", component: AuthenticationComponent, canActivate: [AuthGuard]}
 ];
 

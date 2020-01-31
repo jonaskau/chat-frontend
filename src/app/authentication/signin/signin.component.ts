@@ -30,7 +30,6 @@ export class SigninComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.signInForm.value)
     this.authService.signIn(this.signInForm.value)
   }
 }

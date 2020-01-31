@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ChatService } from '../chat.service';
+import { Chat } from '../chat';
+import { AuthService } from 'src/app/authentication/auth.service';
 
 @Component({
   selector: 'app-navigation',
@@ -7,9 +10,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavigationComponent implements OnInit {
 
-  constructor() { }
+  chats: Chat[];
+  constructor(private authService: AuthService, private chatService: ChatService) { }
 
   ngOnInit() {
+    this.chats = this.chatService.getChats();
   }
 
+  logout(){
+    this.authService.logout();
+  }
 }

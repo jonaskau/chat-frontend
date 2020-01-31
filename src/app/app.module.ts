@@ -11,6 +11,10 @@ import { NavigationComponent } from './chat/navigation/navigation.component';
 import { ChatComponent } from './chat/chat.component';
 import { AuthInterceptor } from './authentication/auth-interceptor';
 import { AuthenticationComponent } from './authentication/authentication.component';
+import { MessageComponent } from './chat/message/message.component';
+import { AddChatComponent } from './chat/add-chat/add-chat.component';
+import { EditChatComponent } from './chat/edit-chat/edit-chat.component';
+import { WelcomeComponent } from './chat/welcome/welcome.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +23,11 @@ import { AuthenticationComponent } from './authentication/authentication.compone
     SigninComponent,
     NavigationComponent,
     ChatComponent,
-    AuthenticationComponent
+    AuthenticationComponent,
+    MessageComponent,
+    AddChatComponent,
+    EditChatComponent,
+    WelcomeComponent
   ],
   imports: [
     BrowserModule,

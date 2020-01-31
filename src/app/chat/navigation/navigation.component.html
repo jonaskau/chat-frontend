@@ -1,1 +1,9 @@
-<p>navigation works!</p>
+<div id="navigation">
+    <ul id="chatList">
+        <li *ngFor="let chat of chats">
+            <span>{{chat.name}}</span>
+        </li>
+    </ul>
+    <button id="addChat">Add chat</button>
+    <button id="logout" (click)="logout()">Log out</button>
+</div>

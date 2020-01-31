@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../authentication/auth.service';
 import { ChatService } from './chat.service';
 
 @Component({
@@ -9,15 +8,9 @@ import { ChatService } from './chat.service';
 })
 export class ChatComponent implements OnInit {
 
-  constructor(private authService: AuthService, private chatService: ChatService) { }
+  constructor(private chatService: ChatService) { }
 
   ngOnInit() {
-    this.chatService.receiveAllMessages();
-    
+    this.chatService.receiveAllMessagesAndStartWebSocket();
   }
-
-  logout(){
-    this.authService.logout();
-  }
-
 }
