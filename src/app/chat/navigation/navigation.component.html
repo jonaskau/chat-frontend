@@ -1,6 +1,6 @@
 <div id="navigation">
     <ul id="chatList">
-        <li *ngFor="let chat of chats">
+        <li *ngFor="let chat of chats" routerLink="/chat/{{chat.id}}">
             <span>{{chat.name}}</span>
         </li>
     </ul>

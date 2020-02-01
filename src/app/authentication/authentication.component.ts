@@ -10,6 +10,7 @@ export class AuthenticationComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    console.log("start auth component")
   }
 
 }

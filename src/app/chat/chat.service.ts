@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Backend } from '../backend';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Chat } from './chat';
 import { IncomingMessage } from './incoming-message';
@@ -15,8 +15,8 @@ import { IncomingWSMessage } from './incoming-ws-message';
 })
 export class ChatService extends Backend {
 
-  private chats: Chat[];
-  private messageWebSocketSubject: WebSocketSubject<IncomingWSMessage>;
+  private chats = <Chat[]>[]
+  private messageWebSocketSubject: WebSocketSubject<IncomingWSMessage>
 
   constructor(
     private http: HttpClient, 
@@ -25,7 +25,12 @@ export class ChatService extends Backend {
   }
 
   getChats(): Chat[] {
-    return this.chats;
+    return this.chats
+  }
+
+  removeAllMessagesAndCloseWebSocket(): void {
+    this.chats = <Chat[]>[]
+    this.messageWebSocketSubject.complete()
   }
 
   receiveAllMessagesAndStartWebSocket() {
@@ -34,7 +39,6 @@ export class ChatService extends Backend {
       .pipe(
         catchError(this.handleError<IncomingMessage[]>(<IncomingMessage[]>[]))
       ).subscribe(incomingMessages => {
-        this.chats = <Chat[]>[]
         incomingMessages.forEach(incomingMessage => {
           let found = false;
           let message: Message = {
@@ -55,8 +59,8 @@ export class ChatService extends Backend {
               messages: [message]
             })
           }
-        });
-        this.startWebSocket();
+        })
+        this.startWebSocket()
       })
   }
 
