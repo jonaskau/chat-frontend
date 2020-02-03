@@ -8,7 +8,7 @@ import { IncomingMessage } from './incoming-message';
 import { Message } from './message';
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket' 
 import { AuthService } from '../authentication/auth.service';
-import { IncomingWSMessage } from './incoming-ws-message';
+import { WSMessage } from './ws-message';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +16,7 @@ import { IncomingWSMessage } from './incoming-ws-message';
 export class ChatService extends Backend {
 
   private chats = <Chat[]>[]
-  private messageWebSocketSubject: WebSocketSubject<IncomingWSMessage>
+  private messageWebSocketSubject: WebSocketSubject<any>
 
   constructor(
     private http: HttpClient, 
@@ -71,6 +71,7 @@ export class ChatService extends Backend {
     });
     this.messageWebSocketSubject.subscribe (
       message => {
+        console.log(message)
         this.addMessage(message)
       },
       error => {
@@ -82,7 +83,7 @@ export class ChatService extends Backend {
     )
   }
 
-  private addMessage(wsMessage: IncomingWSMessage) {
+  private addMessage(wsMessage: WSMessage) {
     let found = false;
     let message: Message = {
       date: Date.now(),
