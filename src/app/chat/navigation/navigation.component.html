@@ -1,9 +1,13 @@
 <div id="navigation">
     <ul id="chatList">
-        <li *ngFor="let chat of chats" routerLink="/chat/{{chat.id}}">
+        <li 
+            *ngFor="let chat of chats" 
+            (click)="selectChat(chat.id)"
+            [routerLink]="['/chat', chat.id]"
+            [class.selected]="chat.id === selectedChatId">
             <span>{{chat.name}}</span>
         </li>
     </ul>
-    <button id="addChat">Add chat</button>
-    <button id="logout" (click)="logout()">Log out</button>
+    <button id="addChat" class="chat-button border-bottom-gray">Add chat</button>
+    <button id="logout" class="chat-button border-top-gray" (click)="logout()">Log out</button>
 </div>

@@ -1,0 +1,51 @@
+#message {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: var(--navigation-width);
+}
+
+#messageArea {
+    position: absolute;
+    top: var(--bar-height);
+    right: 0;
+    bottom: var(--bar-height);
+    left: var(--navigation-width);
+}
+
+#chatName {
+    position: absolute;
+    top: 0;
+    right: var(--button-right-width);
+    left: 0;
+    height: var(--bar-height);
+    background-color: rgba(216, 195, 165, 0.6);
+    //border-bottom: solid 5px var(--vanilla);
+}
+
+#inputArea {
+    position: absolute;
+    right: var(--button-right-width);
+    bottom: 0;
+    left: 0;
+    height: var(--bar-height);
+    background-color: rgba(216, 195, 165, 0.4);
+    //border-top: solid 5px var(--vanilla);
+}
+
+#addUsers {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: var(--button-right-width);
+    height: var(--bar-height);
+}
+
+#send {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: var(--button-right-width);
+    height: var(--bar-height);
+}

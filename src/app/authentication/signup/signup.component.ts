@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormControl, FormGroup, ValidationErrors } from '@angular/forms';
-import { Observable } from 'rxjs';
 import { AuthService } from '../auth.service';
 
 @Component({

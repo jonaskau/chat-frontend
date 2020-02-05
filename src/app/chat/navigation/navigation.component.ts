@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ChatService } from '../chat.service';
 import { Chat } from '../chat';
 import { AuthService } from 'src/app/authentication/auth.service';
-import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-navigation',
@@ -12,16 +11,21 @@ import { ActivatedRoute } from '@angular/router';
 export class NavigationComponent implements OnInit {
 
   chats: Chat[];
-  selectedChatId: String;
+  selectedChatId: string;
 
   constructor(
     private authService: AuthService, 
-    private chatService: ChatService,
-    private route: ActivatedRoute) { }
+    private chatService: ChatService) { }
 
   ngOnInit() {
-    this.chats = this.chatService.getChats();
-    this.selectedChatId = this.route.snapshot.paramMap.get('id')
+    this.chats = this.chatService.getChats()
+    this.chatService.getCurrentChatIdBehaviorSubject().subscribe(id => {
+      this.selectedChatId = id
+    })
+  }
+
+  selectChat(chatId: string) {
+    this.chatService.getCurrentChatIdBehaviorSubject().next(chatId)
   }
 
   logout(){

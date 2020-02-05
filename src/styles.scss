@@ -34,6 +34,7 @@ body {
     //sizes:
     --bar-height: 50px;
     --navigation-width: 300px;
+    --button-right-width: 200px;
 }
 
 .header-authenticate {
@@ -73,4 +74,29 @@ body {
 
 .eggshell-color {
     color: var(--eggshell);
+}
+
+.chat-button {
+    height: var(--bar-height);
+    background-color: var(--vanilla);
+    border: none;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 25px;
+}
+
+
+.chat-button:focus {
+    outline-width: 0;
+}
+
+.chat-button:hover {
+    cursor: pointer;
+}
+
+.border-bottom-gray {
+    border-bottom: solid 5px var(--gray);
+}
+
+.border-top-gray {
+    border-top: solid 5px var(--gray);
 }

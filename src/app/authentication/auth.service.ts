@@ -17,7 +17,9 @@ export class AuthService extends Backend{
   private isAuthenticatedSubject = new Subject<boolean>();
   private usernameAlreadyTaken = new Subject<boolean>();
 
-  constructor(private http: HttpClient, private router: Router) { 
+  constructor(
+    private http: HttpClient, 
+    private router: Router) { 
     super()
   }
 
@@ -38,7 +40,7 @@ export class AuthService extends Backend{
   }
 
   usernameValidator (control: AbstractControl): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> {
-    return this.http.get<{available: Boolean}>(`${this.Url}user/usernameAvailable/${control.value}`).pipe(
+    return this.http.get<{available: Boolean}>(`${this.Url}users/usernameAvailable/${control.value}`).pipe(
       tap(usernameAvailable => usernameAvailable.available ? this.usernameAlreadyTaken.next(false) : this.usernameAlreadyTaken.next(true)),
       map(usernameAvailable => (usernameAvailable.available ? null : {usernameNotAvailable: true})),
       catchError(this.handleError<ValidationErrors>({databaseError: true}))
@@ -54,7 +56,7 @@ export class AuthService extends Backend{
   }
 
   private authenticate(user: User, signInOrUp: string) {
-    this.http.post<{token: string, expiresIn: number}>(`${this.Url}user/${signInOrUp}`, user).pipe(
+    this.http.post<{token: string, expiresIn: number}>(`${this.Url}users/${signInOrUp}`, user).pipe(
       catchError(this.handleAuthenticationError())
     ).subscribe(authData => {
       if (authData == null) {

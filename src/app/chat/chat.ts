@@ -1,7 +1,8 @@
 import { Message } from './message';
 
 export interface Chat {
-    id: String,
-    name: String,
+    id: string,
+    name: string,
+    users: string[],
     messages: Message[]
 }

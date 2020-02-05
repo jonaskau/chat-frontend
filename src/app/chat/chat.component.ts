@@ -8,10 +8,10 @@ import { ChatService } from './chat.service';
 })
 export class ChatComponent implements OnInit {
 
-  constructor(private chatService: ChatService) {}
+  constructor(
+    private chatService: ChatService) {}
 
   ngOnInit() {
-    console.log("init chat component")
-    this.chatService.receiveAllMessagesAndStartWebSocket();
+    this.chatService.receiveChatsAndStartWebSocket()
   }
 }

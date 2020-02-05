@@ -27,12 +27,13 @@
         height: var(--bar-height);
         font-size: 20px;
         line-height: 50px;
+        padding-left: 10px;
         background-color: rgba(216, 195, 165, 0.4);
-        border-bottom: solid 2px rgb(216, 195, 165);
+        border-bottom: solid 2px var(--vanilla);
     }
 
     li:hover {
-        padding-left: 4px;
+        padding-left: 5px;
         cursor: pointer;
     }
 
@@ -45,20 +46,7 @@
     bottom: 0;
 }
 
-button {
-    height: var(--bar-height);
-    background-color: var(--vanilla);
-    border: none;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 25px;
-}
-
-
-button:focus {
-    outline-width: 0;
-}
-
-button:hover {
-    height: 54px;
-    cursor: pointer;
+.selected {
+    padding-left: 5px !important;
+    border-left: solid 5px var(--gray);
 }

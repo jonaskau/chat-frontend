@@ -1,5 +1,5 @@
 export interface WSMessage {
-    chatId: String,
-    author: String, 
-    message: String
+    chatId: string,
+    author: string, 
+    message: string
 }
