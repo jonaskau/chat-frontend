@@ -1,5 +1,5 @@
 #welcome {
-    position: absolute;
+    position: fixed;
     top: 0;
     right: 0;
     bottom: 0;
@@ -8,17 +8,17 @@
 
 #message {
     position: absolute;
-    top: 50%;
     left: 50%;
-    transform: translate(-55%, -60%);
+    transform: translate(-55%, 0);
     font-family: 'Caveat';
+    color: var(--font-color);
     text-align: center;
 
     h1 {
-        font-size: 16vw;
+        font-size: 12vw;
     }
 
     h2 {
-        font-size: 5.6vw;
+        font-size: 4.6vw;
     }
 }

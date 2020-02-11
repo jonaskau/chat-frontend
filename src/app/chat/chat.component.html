@@ -1,4 +1,5 @@
 <div id="chat">
-    <app-navigation></app-navigation>
+    <app-navigation (OpenAddChat)="toggleAddChat($event)"></app-navigation>
     <router-outlet></router-outlet>
 </div>
+<app-add-chat (CloseAddChat)="toggleAddChat($event)" *ngIf="addChat"></app-add-chat>

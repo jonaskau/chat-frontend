@@ -6,16 +6,18 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { User } from './user';
 import { Backend } from '../backend';
 import { Router } from '@angular/router';
+import { AuthData } from './auth-data';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService extends Backend{
 
-  private token = "";
-  private isAuthenticated = false;
-  private isAuthenticatedSubject = new Subject<boolean>();
-  private usernameAlreadyTaken = new Subject<boolean>();
+  private token = ""
+  private username = ""
+  private isAuthenticated = false
+  private isAuthenticatedSubject = new Subject<boolean>()
+  private usernameAlreadyTaken = new Subject<boolean>()
 
   constructor(
     private http: HttpClient, 
@@ -24,19 +26,23 @@ export class AuthService extends Backend{
   }
 
   getToken() {
-    return this.token;
+    return this.token
+  }
+
+  getUsername() {
+    return this.username
   }
 
   getIsAuthenticated() {
-    return this.isAuthenticated;
+    return this.isAuthenticated
   }
 
   getIsAuthenticatedObservable() {
-    return this.isAuthenticatedSubject as Observable<boolean>;
+    return this.isAuthenticatedSubject as Observable<boolean>
   }
 
   getUsernameAlreadyTaken() {
-    return this.usernameAlreadyTaken as Observable<boolean>;
+    return this.usernameAlreadyTaken as Observable<boolean>
   }
 
   usernameValidator (control: AbstractControl): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> {
@@ -48,70 +54,76 @@ export class AuthService extends Backend{
   }
 
   signUp(user: User) {
-    this.authenticate(user, "signup");
+    this.authenticate(user, "signup")
   }
 
   signIn(user: User) {
-    this.authenticate(user, "login");
+    this.authenticate(user, "login")
   }
 
   private authenticate(user: User, signInOrUp: string) {
-    this.http.post<{token: string, expiresIn: number}>(`${this.Url}users/${signInOrUp}`, user).pipe(
+    this.http.post<AuthData>(`${this.Url}users/${signInOrUp}`, user).pipe(
       catchError(this.handleAuthenticationError())
     ).subscribe(authData => {
       if (authData == null) {
-        return;
+        return
       }
-      this.token = authData.token;
-      this.isAuthenticated = true;
+      this.token = authData.token
+      this.username = authData.username
+      this.isAuthenticated = true
       setTimeout(() => {
-        this.logout();
+        this.logout()
       }, authData.expiresIn * 60000)
-      this.setAuthData(this.token, Date.now() + 3600000);
+      this.setAuthData(this.token, this.username, Date.now() + 3600000)
       this.router.navigate(['/'])
-    });
+    })
   }
 
   private handleAuthenticationError () {
-    return (error: any): Observable<{token: string, expiresIn: number}> => {
-      console.log(error);
-      this.isAuthenticatedSubject.next(false);
-      return of(null);
+    return (error: any): Observable<AuthData> => {
+      console.log(error)
+      this.isAuthenticatedSubject.next(false)
+      return of(null)
     }
   }
 
   logout() {
-    this.token = "";
-    this.isAuthenticated = false;
-    this.removeAuthData();
+    this.token = ""
+    this.username = ""
+    this.isAuthenticated = false
+    this.removeAuthData()
     this.router.navigate(['/authenticate'])
   }
 
   autoSignIn() {
-    const authData = this.getAuthData();
-    if (authData.token == null || authData.expiresAt == null) {
-      return;
+    const authData = this.getAuthData()
+    if (authData.token == null || authData.username == null || authData.expiresAt == null) {
+      return
     }
-    const timeUnitlLogout = +authData.expiresAt - Date.now();
+    const timeUnitlLogout = +authData.expiresAt - Date.now()
     if (timeUnitlLogout > 0 ) {
-      this.token = authData.token;
-      this.isAuthenticated = true;
+      this.token = authData.token
+      this.username = authData.username
+      this.isAuthenticated = true
     }
   }
 
   private getAuthData() {
-    const token = localStorage.getItem("token");
-    const expiresAt = localStorage.getItem("expiresAt");
-    return {token, expiresAt}
+    const token = localStorage.getItem("token")
+    const username = localStorage.getItem("username")
+    const expiresAt = localStorage.getItem("expiresAt")
+    return {token, username, expiresAt}
   }
 
-  private setAuthData(token: string, expiresAt: number) {
-    localStorage.setItem("token", token);
-    localStorage.setItem("expiresAt", expiresAt.toString());
+  private setAuthData(token: string, username: string, expiresAt: number) {
+    localStorage.setItem("token", token)
+    localStorage.setItem("username", username)
+    localStorage.setItem("expiresAt", expiresAt.toString())
   }
 
   private removeAuthData() {
-    localStorage.removeItem("token");
-    localStorage.removeItem("expiresAt");
+    localStorage.removeItem("token")
+    localStorage.removeItem("username")
+    localStorage.removeItem("expiresAt")
   }
 }

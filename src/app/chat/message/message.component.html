@@ -1,9 +1,35 @@
-<div id="message">
-    <div id="messageArea">
-
-    </div>
-    <div id="chatName" class="border-bottom-gray">{{chat.name}}</div>
-    <div id="inputArea" class="border-top-gray"></div>
-    <button id="addUsers" class="chat-button border-bottom-gray">Add users</button>
-    <button id="send" class="chat-button border-top-gray">Send</button>
+<div id="messageArea">
+    <ul id="messageList" #messageList>
+        <li class="float-middle">
+            <button class="button-2" (click)="loadMore()">load more</button>
+        </li>
+        <li
+            class="message"
+            *ngFor="let message of chat.messages"
+            [class.float-right]="username == message.author"
+            >
+            <span><b>{{message.author}}:</b></span>
+            <p>{{message.message}}</p>
+        </li
+        >
+    </ul>
+    <div id="chatName">{{chat.name}}</div>
+    <button id="addUsers" class="chat-button">Add users</button>
+    <form
+        [formGroup]="messageForm"
+        (ngSubmit)="sendMessage()"
+        autocomplete="off">
+        <div id="inputArea">
+            <input
+                type="text"
+                formControlName="messageInput"
+                autocomplete="off">
+        </div>
+        <button 
+            id="send"
+            class="chat-button"
+            type="submit"
+            [disabled]="!messageForm.valid">Send</button>    
+    </form
+    >
 </div>

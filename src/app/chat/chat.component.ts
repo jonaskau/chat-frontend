@@ -8,10 +8,17 @@ import { ChatService } from './chat.service';
 })
 export class ChatComponent implements OnInit {
 
+  addChat = false
+
   constructor(
     private chatService: ChatService) {}
 
   ngOnInit() {
     this.chatService.receiveChatsAndStartWebSocket()
   }
+
+  toggleAddChat(value: boolean) {
+    this.addChat = value
+  }
+
 }

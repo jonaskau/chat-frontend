@@ -1,10 +1,9 @@
 #navigation {
-    position: absolute;
+    position: fixed;
     width: var(--navigation-width);
-    top: 0;
-    left: 0;
-    bottom: 0;
-    background-color: rgba(216, 195, 165, 0.4);
+    top: var(--space-width);
+    left: var(--space-width);
+    bottom: var(--space-width);
 }
 
 #addChat, #chatList, #logout {
@@ -18,22 +17,27 @@
 }
 
 #chatList {
-    top: var(--bar-height);
-    bottom: var(--bar-height);
+    overflow-y: scroll;
+    direction: rtl;
+    padding-left: var(--space-width);
+    top: calc(var(--bar-height) + var(--space-width));
+    bottom: calc(var(--bar-height) + var(--space-width));
     list-style-type: none;
 
     li {
+        direction: ltr;
+        text-align: left;
+        overflow: hidden;
         width: 100%;
         height: var(--bar-height);
         font-size: 20px;
         line-height: 50px;
         padding-left: 10px;
-        background-color: rgba(216, 195, 165, 0.4);
-        border-bottom: solid 2px var(--vanilla);
+        margin-top: var(--space-width);
+        background-color: rgba(216, 195, 165, 0.6);
     }
 
     li:hover {
-        padding-left: 5px;
         cursor: pointer;
     }
 
@@ -47,6 +51,9 @@
 }
 
 .selected {
-    padding-left: 5px !important;
-    border-left: solid 5px var(--gray);
+    background-color: var(--element-color-1) !important;
+}
+
+.first {
+    margin-top: 0 !important;
 }

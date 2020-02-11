@@ -8,38 +8,71 @@
 
 body {
     font-family: 'Montserrat', sans-serif;
-    color: var(--font-color);
+    //color: var(--font-color);
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+  
+/* Track */
+::-webkit-scrollbar-track {
+    background: var(--element-color-1-50); 
+}
+   
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: var(--element-color-1); 
+}
+  
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555; 
 }
 
 :root {
     //colors:
-    --font-color: rgb(121,90,58);
-    --contrast-color: rgb(233,196,133);
-    --headline-color: white;
-    --announcement-background-color: rgb(230,230,230);
-
+    --brown: rgb(121,90,58);
+    --dark-yellow: rgb(233,196,133);
     //happy
     --yellow: #f8e9a1;
     --red: #f76c6c;
-    --lightblue: #a8d0e6;
-    --blue: #374785;
-    --darkblue: #24305e;
+    --darkblue: #374785;
+    --darkdarkblue: #24305e;
     //minimal yet warm
     --eggshell: #eae7dc;
     --vanilla: #d8c3a5;
     --gray: #8e8d8a;
     --lightjellyred: #e98074;
     --jellyred: #e85a4f;
+    //greentones
+    --green: #347C45;
+    --middlegreen: #205F2F;
+    --brightgreen: rgba(114, 185, 131, 0.9);
+    //bluetones
+    --blue: rgb(55, 91, 233);
+    --brightblue: rgba(111, 182, 221, 0.9);
 
-    //sizes:
+    //config-colors:
+    --element-color-1: rgb(216, 195, 165);
+    --element-color-1-75: rgba(216, 195, 165, 0.75);
+    --element-color-1-50: rgba(216, 195, 165, 0.5);
+    --element-color-2: rgb(234, 231, 220);
+    --element-color-2-75: rgb(234, 231, 220, 0.75);
+    --element-color-2-50: rgb(234, 231, 220, 0.5);
+    --font-color-1: black;
+    --font-color-2: rgb(121,90,58);
+    //config-sizes:
     --bar-height: 50px;
     --navigation-width: 300px;
     --button-right-width: 200px;
+    --space-width: 5px;
+    --form-width: 500px;
 }
 
 .header-authenticate {
     font-size: 12vw;
-    color: var(--vanilla);
     text-align: center;
 }
 .form-authenticate {
@@ -60,7 +93,6 @@ body {
 .button-authenticate:focus, 
 .input-authenticate:focus, 
 .button-authenticate:hover {
-    //box-shadow: 0 0 4px 2px rgba(0,0,0,0.2);
     outline-width: 0;
 }
 
@@ -68,22 +100,21 @@ body {
     color: var(--jellyred);
 }
 
-.vanilla-color {
-    color: var(--vanilla);
+.element-color-1 {
+    color: var(--element-color-1);
 }
 
-.eggshell-color {
-    color: var(--eggshell);
+.element-color-2 {
+    color: var(--element-color-2);
 }
 
 .chat-button {
     height: var(--bar-height);
-    background-color: var(--vanilla);
+    background-color: var(--element-color-1);
     border: none;
     font-family: 'Montserrat', sans-serif;
     font-size: 25px;
 }
-
 
 .chat-button:focus {
     outline-width: 0;
@@ -93,10 +124,133 @@ body {
     cursor: pointer;
 }
 
-.border-bottom-gray {
-    border-bottom: solid 5px var(--gray);
+.button-2 {
+    background-color: var(--element-color-2);
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+    width: 100%;
 }
 
-.border-top-gray {
-    border-top: solid 5px var(--gray);
+.button-2:hover {
+    cursor: pointer;
+    box-shadow: 0px 0px 10px rgb(100,100,100);
+}
+
+.button-2:focus {
+    outline-width: 0;
+}
+
+.input-2 {
+    background-color: var(--element-color-2);
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+    width: 100%;
+}
+
+.input-2:focus {
+    outline-width: 0;
+}
+
+.outline-none:focus {
+    outline-width: 0;
+}
+
+.cursor:hover {
+    cursor: pointer;
+}
+
+.editAddChat {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(100,100,100,0.8);
+}
+
+.closeEditAddChat {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    height: 50px;
+    width: 50px;
+    font-size: 50px;
+    color: white;
+    background-color: transparent;
+    border: none;
+}
+
+.editAddChatForm {
+    position: relative;
+    position: fixed;
+    width: var(--form-width);
+    height: var(--form-width);
+    top: calc(50% - var(--form-width) * 0.5);
+    left: calc(50% - var(--form-width) * 0.5);
+    background: var(--element-color-1);
+}
+
+.editAddChatFlexBox {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    margin: var(--space-width);
+
+    span, input, ul {
+        width: calc(50% - var(--space-width) * 0.5);
+    }
+
+    span, input {
+        line-height: 30px;
+        height: 30px;
+    }
+
+    li {
+        display: flex;
+        justify-content: space-between;
+        padding: 2px;
+        height: 30px;
+    }
+
+    ul {
+        border-radius: 5px;
+        padding: 5px;
+        height: calc(var(--form-width) - 5 * var(--space-width) - 3 * 30px);
+        list-style-type: none;
+        overflow-y: scroll;
+        background-color: var(--element-color-2);
+    }
+
+    ul::-webkit-scrollbar-track {
+        background: none;
+    }
+
+    ul::-webkit-scrollbar-thumb {
+        background: var(--gray);
+        border-radius: 5px; 
+    }
+
+    .plus {
+        background-color: var(--red);
+    }
+
+    .minus {
+        background-color: var(--green);
+    }
+
+    .minus, .plus {
+        border-radius: 13px;
+        border: none;
+        width: 26px;
+    }
+}
+
+.editAddChatSubmit {
+    position: absolute;
+    bottom: var(--space-width);
+    left: var(--space-width);
+    width: calc(100% - 2* var(--space-width));
+    height: 30px;
 }

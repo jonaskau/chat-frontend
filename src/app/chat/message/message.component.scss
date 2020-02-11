@@ -1,37 +1,57 @@
-#message {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: var(--navigation-width);
+#messageArea {
+    position: fixed;
+    top: var(--space-width);
+    right: var(--space-width);
+    bottom: var(--space-width);
+    left: calc(2 * var(--space-width) + var(--navigation-width));
 }
 
-#messageArea {
+#messageList {
     position: absolute;
-    top: var(--bar-height);
+    overflow-y: scroll;
+    top: calc(var(--bar-height) + var(--space-width));
     right: 0;
-    bottom: var(--bar-height);
-    left: var(--navigation-width);
+    bottom: calc(var(--bar-height) + var(--space-width));
+    left: 0;
+    list-style-type: none;
+    padding-right: calc(50px + var(--space-width));
+    padding-bottom: 10px;
+    padding-left: 50px;
+
+    .message {
+        background-color: var(--brightgreen);
+        border: solid 2px var(--green);
+        border-radius: 5px;
+        margin-top: calc(2 * var(--space-width));
+        padding: 5px;
+        width: 65%;
+        float: left;
+    }
+
+    .float-middle {
+        width: 30%;
+        margin:auto;
+        margin-top: var(--space-width);
+    }
+
+    .float-right {
+        float: right !important;
+        background-color: var(--brightblue) !important;
+        border: solid 2px var(--blue) !important;
+    }
 }
 
 #chatName {
     position: absolute;
     top: 0;
-    right: var(--button-right-width);
+    right: calc(var(--space-width) + var(--button-right-width));
     left: 0;
     height: var(--bar-height);
-    background-color: rgba(216, 195, 165, 0.6);
-    //border-bottom: solid 5px var(--vanilla);
-}
-
-#inputArea {
-    position: absolute;
-    right: var(--button-right-width);
-    bottom: 0;
-    left: 0;
-    height: var(--bar-height);
-    background-color: rgba(216, 195, 165, 0.4);
-    //border-top: solid 5px var(--vanilla);
+    background-color: var(--element-color-1);
+    font-size: 20px;
+    line-height: var(--bar-height);
+    padding-left: 10px;
+    color: var(--font-color-1);
 }
 
 #addUsers {
@@ -40,6 +60,26 @@
     right: 0;
     width: var(--button-right-width);
     height: var(--bar-height);
+}
+
+#inputArea {
+    position: absolute;
+    right: calc(var(--space-width) + var(--button-right-width));
+    bottom: 0;
+    left: 0;
+    height: var(--bar-height);
+
+    input {
+        width: 100%;
+        height: var(--bar-height);
+        background-color: var(--element-color-2-50);
+        border: solid 5px var(--element-color-1);
+        padding-left: 5px;
+    }
+
+    input:focus {
+        outline-width: 0;
+    }
 }
 
 #send {
