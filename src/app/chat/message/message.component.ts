@@ -16,9 +16,10 @@ export class MessageComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   @ViewChild('messageList', {static: false}) private messageList: ElementRef
   
-  chat: Chat = {id: "", name: "", users: [], messages: []}
+  chat: Chat = {id: "", name: "", users: [], onlineUsers: [], messages: []}
   username = ""
   scrollDown = false
+  editChat = false
   
   private chatsReceivedSubscribtion: Subscription
   private scrollMessageListSubscribtion: Subscription
@@ -82,5 +83,9 @@ export class MessageComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.scrollDown = false
     const lastDate = this.chat.messages[0].date
     this.chatService.receiveMessagesFromDB(this.chat, 5, lastDate)
+  }
+  
+  toggleEditChat(value: boolean) {
+    this.editChat = value
   }
 }

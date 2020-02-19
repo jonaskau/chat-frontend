@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Backend } from '../backend';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable, Subject, BehaviorSubject, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Chat } from './chat';
 import { Message } from './message';
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket' 
 import { AuthService } from '../authentication/auth.service';
-import { WSMessage } from './ws-message';
+import { WSMessage, WS, isWSMessage, isWSEvent, isWSUserOnlineList, isWSChatNameAndUserList} from './ws-message';
 import { IncomingChat } from './incoming-chat';
 
 @Injectable({
@@ -16,7 +16,7 @@ import { IncomingChat } from './incoming-chat';
 export class ChatService extends Backend {
 
   private chats = <Chat[]>[]
-  private messageWebSocketSubject: WebSocketSubject<WSMessage> = null
+  private messageWebSocketSubject: WebSocketSubject<WS> = null
   private chatsReceivedBehaviorSubject = new BehaviorSubject<boolean>(false)
   private currentChatIdBehaviorSubject = new BehaviorSubject<string>("")
   private scrollMessageListSubject = new BehaviorSubject<boolean>(false)
@@ -96,6 +96,7 @@ export class ChatService extends Backend {
           id: chat.id,
           name: chat.name,
           users: chat.users,
+          onlineUsers: <string[]>[],
           messages: <Message[]>[]
         })
       })
@@ -110,8 +111,67 @@ export class ChatService extends Backend {
       protocol: this.authService.getToken()
     });
     this.messageWebSocketSubject.subscribe (
-      message => {
-        this.addMessage(message)
+      ws => {
+        if(isWSMessage(ws)) {
+          this.addMessage(ws)
+        } else if (isWSChatNameAndUserList(ws)) { //passiert bevor der users in dem chat online ist und nachrichten erhalten kann
+          this.chats.push({
+            id: ws.chatId,
+            name: ws.chatName,
+            onlineUsers: [],
+            users: ws.users,
+            messages: []
+          })
+        } else if (isWSUserOnlineList(ws)) { //passiert immer bevor der User online geht
+          let found = false;
+          this.chats.forEach(chat => {
+            if(chat.id == ws.chatId) {
+              chat.onlineUsers = ws.userOnlineList
+              found = true
+            }
+          })
+          if (!found) {         //passiert falls chat erstellt wurde, nachdem ich alle chats erhalten habe
+            let chat: Chat = {  //aber bevor die ws-Verbindung eröffnet wurde
+              id: ws.chatId,  
+              name: "",
+              onlineUsers: ws.userOnlineList,
+              users: [],
+              messages: []
+            }
+            this.chats.push(chat)
+            this.getChatById(ws.chatId).subscribe(result => {
+              chat.name = result.name
+              chat.users = result.users
+            })
+          }
+        } else if (isWSEvent(ws)) {
+          this.chats.forEach(chat => {
+            if (chat.id == ws.chatId) {
+              if (ws.userOnline) {
+                chat.onlineUsers.push(ws.username)
+                chat.messages.push({
+                  author: "System",
+                  date: Date.now(),
+                  message: `${ws.username} online`
+                })
+              } else if (ws.userOffline) {
+                chat.onlineUsers = chat.onlineUsers.filter(username => username !== ws.username)
+                chat.messages.push({
+                  author: "System",
+                  date: Date.now(),
+                  message: `${ws.username} offline`
+                })
+              } else {
+                chat.users.push(ws.username)
+                chat.messages.push({
+                  author: "System",
+                  date: Date.now(),
+                  message: `${ws.username} added`
+                })
+              }
+            }
+          })
+        }
         this.scrollMessageListSubject.next(true)
       },
       error => {
@@ -124,6 +184,19 @@ export class ChatService extends Backend {
   }
 
   private addMessage(wsMessage: WSMessage) {
+    let message: Message = {
+      author: wsMessage.author,
+      date: Date.now(),
+      message: wsMessage.message
+    }
+    this.chats.forEach(chat => {
+      if(chat.id == wsMessage.chatId) {
+        chat.messages.push(message)
+      }
+    })
+  }
+
+  /*private addMessage2(wsMessage: any) {
     let found = false;
     let message: Message = {
       author: wsMessage.author,
@@ -141,9 +214,11 @@ export class ChatService extends Backend {
         this.chats.push({
           id: wsMessage.chatId,
           name: result.chatName,
+          onlineUsers: [],
           users: [],
           messages: [message]
         })
+        //getONline User
       })
     }
   }
@@ -153,6 +228,13 @@ export class ChatService extends Backend {
     return this.http.get<{chatName: string}>(url).pipe(
       catchError(this.handleError<{chatName: string}>({chatName: 'name could not be loaded'}))
     )
+  }*/
+
+  private getChatById(id: string): Observable<{id: string, name: string, users: string[]}> {
+    const url = `${this.Url}chats/getChatById/${id}`
+    return this.http.get<{id: string, name: string, users: string[]}>(url).pipe(
+      catchError(this.handleError<{id: string, name: string, users: string[]}>({id: "", name: "", users: <string[]>[]}))
+    )
   }
 
   addChat(addChat: {name: string, users: string[]}) {
@@ -160,6 +242,13 @@ export class ChatService extends Backend {
     this.http.post(url, addChat).pipe(
       catchError(this.handleError<{}>(null))
     ).subscribe()
+  }
+
+  editChat(editChat: {chatId: string, users: string[]}) {
+    const url = `${this.Url}chats/addUsers`
+    return this.http.put<string[]>(url, editChat).pipe(
+      catchError(this.handleError<string[]>(<string[]>[]))
+    )
   }
 
   getUsernamesByPrefix(usernamePrefix: string): Observable<string[]> {

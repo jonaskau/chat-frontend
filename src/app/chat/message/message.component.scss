@@ -43,6 +43,8 @@
 
 #chatName {
     position: absolute;
+    overflow-x: scroll;
+    overflow-y: hidden;
     top: 0;
     right: calc(var(--space-width) + var(--button-right-width));
     left: 0;
@@ -52,6 +54,10 @@
     line-height: var(--bar-height);
     padding-left: 10px;
     color: var(--font-color-1);
+}
+
+#chatName::-webkit-scrollbar {
+    width: 0;
 }
 
 #addUsers {

@@ -1,7 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Subject, Observable } from 'rxjs';
-import { distinctUntilChanged, debounceTime, switchMap, map, tap, filter } from 'rxjs/operators';
+import { switchMap, map} from 'rxjs/operators';
 import { ChatService } from '../chat.service';
 import { AuthService } from 'src/app/authentication/auth.service';
 
@@ -35,8 +35,6 @@ export class AddChatComponent implements OnInit {
   
   ngOnInit() {
     this.users$ = this.searchTerms.pipe(
-      /*debounceTime(0),
-      distinctUntilChanged(),*/
       switchMap((term: string) => this.chatService.getUsernamesByPrefix(term)),
       map(usernames => {
         return usernames.filter(username => {

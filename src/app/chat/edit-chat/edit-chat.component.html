@@ -1,1 +1,40 @@
-<p>edit-chat works!</p>
+<div class="editAddChat">
+    <button (click)="closeAddChat()" class="closeEditAddChat cursor outline-none">X</button>
+    <form
+        class="editAddChatForm"
+        [formGroup]="editChatForm"
+        (ngSubmit)="onSubmit()"
+        autocomplete="off">
+        <label class="editAddChatFlexBox">
+            <span>chatname:</span>
+            <span><b>{{chat.name}}</b></span>
+        </label>
+        <label class="editAddChatFlexBox">
+            <span>username search:</span>
+            <input
+                #searchBox
+                class="input-2"
+                type="text"
+                autocomplete="off"
+                (input)="search(searchBox.value)" />
+        </label>
+        <div class="editAddChatFlexBox">
+            <ul>
+                <li *ngFor="let user of chat.users">
+                    <span>{{user}}</span>
+                </li>
+                <li *ngFor="let user of users.value; let i = index">
+                    <span>{{user}}</span>
+                    <button type="button" class="plus outline-none cursor" (click)="removeUser(i)">-</button>
+                </li>
+            </ul>
+            <ul>
+                <li *ngFor="let user of users$ | async">
+                    <span>{{user}}</span>
+                    <button type="button" class="minus outline-none cursor" (click)="addUser(user)">+</button>
+                </li>
+            </ul>
+        </div>
+        <button type="submit" class="editAddChatSubmit button-2">Add users</button>
+    </form>
+</div>

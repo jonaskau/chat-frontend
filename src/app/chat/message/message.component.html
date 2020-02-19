@@ -10,11 +10,10 @@
             >
             <span><b>{{message.author}}:</b></span>
             <p>{{message.message}}</p>
-        </li
-        >
+        </li>
     </ul>
-    <div id="chatName">{{chat.name}}</div>
-    <button id="addUsers" class="chat-button">Add users</button>
+    <div id="chatName">{{chat.onlineUsers[0]}}</div>
+    <button id="addUsers" class="chat-button" (click)="toggleEditChat(true)">Add users</button>
     <form
         [formGroup]="messageForm"
         (ngSubmit)="sendMessage()"
@@ -30,6 +29,6 @@
             class="chat-button"
             type="submit"
             [disabled]="!messageForm.valid">Send</button>    
-    </form
-    >
+    </form>
 </div>
+<app-edit-chat [chat]="chat" (CloseEditChat)="toggleEditChat($event)" *ngIf="editChat"></app-edit-chat>
