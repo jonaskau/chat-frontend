@@ -196,42 +196,8 @@ export class ChatService extends Backend {
     })
   }
 
-  /*private addMessage2(wsMessage: any) {
-    let found = false;
-    let message: Message = {
-      author: wsMessage.author,
-      date: Date.now(),
-      message: wsMessage.message
-    }
-    this.chats.forEach(chat => {
-      if(chat.id == wsMessage.chatId) {
-        chat.messages.push(message)
-        found = true
-      }
-    })
-    if (!found) {
-      this.getChatNameById(wsMessage.chatId).subscribe(result => {
-        this.chats.push({
-          id: wsMessage.chatId,
-          name: result.chatName,
-          onlineUsers: [],
-          users: [],
-          messages: [message]
-        })
-        //getONline User
-      })
-    }
-  }
-
-  private getChatNameById(id: string): Observable<{chatName: string}> {
-    const url = `${this.Url}chats/getChatNameById/${id}`
-    return this.http.get<{chatName: string}>(url).pipe(
-      catchError(this.handleError<{chatName: string}>({chatName: 'name could not be loaded'}))
-    )
-  }*/
-
   private getChatById(id: string): Observable<{id: string, name: string, users: string[]}> {
-    const url = `${this.Url}chats/getChatById/${id}`
+    const url = `${this.Url}chats/${id}`
     return this.http.get<{id: string, name: string, users: string[]}>(url).pipe(
       catchError(this.handleError<{id: string, name: string, users: string[]}>({id: "", name: "", users: <string[]>[]}))
     )

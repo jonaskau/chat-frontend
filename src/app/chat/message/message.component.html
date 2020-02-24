@@ -12,7 +12,13 @@
             <p>{{message.message}}</p>
         </li>
     </ul>
-    <div id="chatName">{{chat.onlineUsers[0]}}</div>
+    <ul id="chatName">
+        <li
+            *ngFor="let user of chat.onlineUsers"
+            >
+            <span>{{user}}</span>
+        </li>
+    </ul>
     <button id="addUsers" class="chat-button" (click)="toggleEditChat(true)">Add users</button>
     <form
         [formGroup]="messageForm"
