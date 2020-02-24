@@ -7,8 +7,7 @@ import { Chat } from './chat';
 import { Message } from './message';
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket' 
 import { AuthService } from '../authentication/auth.service';
-import { WSMessage, WS, isWSMessage, isWSEvent, isWSUserOnlineList, isWSChatNameAndUserList} from './ws-message';
-import { IncomingChat } from './incoming-chat';
+import { WSMessage, WS, isWSMessage, isWSEvent, isWSChat, isWSChatAmount, WSEvent, WSChat} from './ws-message';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +19,7 @@ export class ChatService extends Backend {
   private chatsReceivedBehaviorSubject = new BehaviorSubject<boolean>(false)
   private currentChatIdBehaviorSubject = new BehaviorSubject<string>("")
   private scrollMessageListSubject = new BehaviorSubject<boolean>(false)
+  private chatRoomAmountAtBeginning: number
 
   constructor(
     private http: HttpClient, 
@@ -83,29 +83,7 @@ export class ChatService extends Backend {
     this.currentChatIdBehaviorSubject.next("")
   }
 
-  receiveChatsAndStartWebSocket() {
-    if (this.messageWebSocketSubject != null) {
-      return
-    }
-    const url = `${this.Url}chats`
-    this.http.get<IncomingChat[]>(url).pipe(
-      catchError(this.handleError<IncomingChat[]>(<IncomingChat[]>[]))
-    ).subscribe(chats => {
-      chats.forEach(chat => {
-        this.chats.push({
-          id: chat.id,
-          name: chat.name,
-          users: chat.users,
-          onlineUsers: <string[]>[],
-          messages: <Message[]>[]
-        })
-      })
-      this.chatsReceivedBehaviorSubject.next(true)
-      this.startWebSocket()
-    })
-  }
-
-  private startWebSocket() {
+  startWebSocket() {
     this.messageWebSocketSubject = webSocket({
       url: this.wsUrl,
       protocol: this.authService.getToken()
@@ -113,66 +91,14 @@ export class ChatService extends Backend {
     this.messageWebSocketSubject.subscribe (
       ws => {
         if(isWSMessage(ws)) {
-          this.addMessage(ws)
-        } else if (isWSChatNameAndUserList(ws)) { //passiert bevor der users in dem chat online ist und nachrichten erhalten kann
-          this.chats.push({
-            id: ws.chatId,
-            name: ws.chatName,
-            onlineUsers: [],
-            users: ws.users,
-            messages: []
-          })
-        } else if (isWSUserOnlineList(ws)) { //passiert immer bevor der User online geht
-          let found = false;
-          this.chats.forEach(chat => {
-            if(chat.id == ws.chatId) {
-              chat.onlineUsers = ws.userOnlineList
-              found = true
-            }
-          })
-          if (!found) {         //passiert falls chat erstellt wurde, nachdem ich alle chats erhalten habe
-            let chat: Chat = {  //aber bevor die ws-Verbindung eröffnet wurde
-              id: ws.chatId,  
-              name: "",
-              onlineUsers: ws.userOnlineList,
-              users: [],
-              messages: []
-            }
-            this.chats.push(chat)
-            this.getChatById(ws.chatId).subscribe(result => {
-              chat.name = result.name
-              chat.users = result.users
-            })
-          }
+          this.addWSMessage(ws)
+        } else if (isWSChatAmount(ws)) {
+          this.chatRoomAmountAtBeginning = ws.amount
+        } else if (isWSChat(ws)) {
+          this.addWSChat(ws)
         } else if (isWSEvent(ws)) {
-          this.chats.forEach(chat => {
-            if (chat.id == ws.chatId) {
-              if (ws.userOnline) {
-                chat.onlineUsers.push(ws.username)
-                chat.messages.push({
-                  author: "System",
-                  date: Date.now(),
-                  message: `${ws.username} online`
-                })
-              } else if (ws.userOffline) {
-                chat.onlineUsers = chat.onlineUsers.filter(username => username !== ws.username)
-                chat.messages.push({
-                  author: "System",
-                  date: Date.now(),
-                  message: `${ws.username} offline`
-                })
-              } else {
-                chat.users.push(ws.username)
-                chat.messages.push({
-                  author: "System",
-                  date: Date.now(),
-                  message: `${ws.username} added`
-                })
-              }
-            }
-          })
+          this.processWSEvent(ws)
         }
-        this.scrollMessageListSubject.next(true)
       },
       error => {
         console.log(error)
@@ -182,25 +108,58 @@ export class ChatService extends Backend {
       }
     )
   }
-
-  private addMessage(wsMessage: WSMessage) {
+  
+  private addWSMessage(wsMessage: WSMessage) {
     let message: Message = {
       author: wsMessage.author,
       date: Date.now(),
       message: wsMessage.message
     }
-    this.chats.forEach(chat => {
-      if(chat.id == wsMessage.chatId) {
-        chat.messages.push(message)
+    for(let i = 0; i < this.chats.length; i++) {
+      if (this.chats[i].id == wsMessage.chatId) {
+        this.chats[i].messages.push(message)
+        this.scrollMessageListSubject.next(true)
+        break
       }
-    })
+    }
   }
 
-  private getChatById(id: string): Observable<{id: string, name: string, users: string[]}> {
-    const url = `${this.Url}chats/${id}`
-    return this.http.get<{id: string, name: string, users: string[]}>(url).pipe(
-      catchError(this.handleError<{id: string, name: string, users: string[]}>({id: "", name: "", users: <string[]>[]}))
-    )
+  private addWSChat(wsChat: WSChat) {
+    this.chats.push({
+      id: wsChat.chatId,
+      name: wsChat.chatName,
+      onlineUsers: wsChat.userOnlineList,
+      users: wsChat.users,
+      messages: []
+    })
+    if (this.chats.length == this.chatRoomAmountAtBeginning) {
+      this.chatsReceivedBehaviorSubject.next(true)
+    }
+  }
+
+  private processWSEvent(wsEvent: WSEvent) {
+    let message: Message = {
+      author: 'System',
+      date: Date.now(),
+      message: wsEvent.username
+    }
+    for(let i = 0; i < this.chats.length; i++) {
+      if (this.chats[i].id == wsEvent.chatId) {
+        if (wsEvent.userOnline) {
+          this.chats[i].onlineUsers.push(wsEvent.username) //onlineUsers to map!
+          message.message += ' online'
+        } else if (wsEvent.userOffline) {
+          this.chats[i].onlineUsers = this.chats[i].onlineUsers.filter(username => username !== wsEvent.username)
+          message.message += ' offline'
+        } else {
+          this.chats[i].users.push(wsEvent.username)
+          message.message += ' added'
+        }
+        this.chats[i].messages.push(message)
+        this.scrollMessageListSubject.next(true)
+        break
+      }
+    }
   }
 
   addChat(addChat: {name: string, users: string[]}) {

@@ -1,4 +1,4 @@
-export type WS = WSMessage | WSEvent | WSUserOnlineList | WSChatNameAndUserList
+export type WS = WSMessage | WSEvent | WSChat | WSChatAmount
 
 export interface WSMessage {
     chatId: string,
@@ -20,20 +20,20 @@ export function isWSEvent(ws: WS): ws is WSEvent {
     return (ws as WSEvent).username !== undefined
 }
 
-export interface WSUserOnlineList {
-    chatId: string,
-    userOnlineList: string[]
-}
-export function isWSUserOnlineList(ws: WS): ws is WSUserOnlineList { 
-    return (ws as WSUserOnlineList).userOnlineList !== undefined
-}
-
-export interface WSChatNameAndUserList {
+export interface WSChat {
     chatId: string,
     chatName: string,
-    users: string[]
+    users: string[],
+    userOnlineList: string[]
 }
-export function isWSChatNameAndUserList(ws: WS): ws is WSChatNameAndUserList {
-    return (ws as WSChatNameAndUserList).chatName !== undefined
+export function isWSChat(ws: WS): ws is WSChat {
+    return (ws as WSChat).chatName !== undefined
+}
+
+export interface WSChatAmount {
+    amount: number
+}
+export function isWSChatAmount(ws: WS): ws is WSChatAmount {
+    return (ws as WSChatAmount).amount !== undefined
 }
 

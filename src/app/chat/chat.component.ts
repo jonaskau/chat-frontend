@@ -14,7 +14,7 @@ export class ChatComponent implements OnInit {
     private chatService: ChatService) {}
 
   ngOnInit() {
-    this.chatService.receiveChatsAndStartWebSocket()
+    this.chatService.startWebSocket()
   }
 
   toggleAddChat(value: boolean) {
