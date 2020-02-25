@@ -125,14 +125,21 @@ export class ChatService extends Backend {
   }
 
   private addWSChat(wsChat: WSChat) {
+    let users = new Map<string, boolean>()
+    wsChat.users.forEach(user => {
+      users.set(user, false)
+    })
+    wsChat.userOnlineList.forEach(user => {
+      users.set(user, true)
+    })
+
     this.chats.push({
       id: wsChat.chatId,
       name: wsChat.chatName,
-      onlineUsers: wsChat.userOnlineList,
-      users: wsChat.users,
+      users: users,
       messages: []
     })
-    if (this.chats.length == this.chatRoomAmountAtBeginning) {
+    if (this.chats.length >= this.chatRoomAmountAtBeginning) {
       this.chatsReceivedBehaviorSubject.next(true)
     }
   }
@@ -146,13 +153,13 @@ export class ChatService extends Backend {
     for(let i = 0; i < this.chats.length; i++) {
       if (this.chats[i].id == wsEvent.chatId) {
         if (wsEvent.userOnline) {
-          this.chats[i].onlineUsers.push(wsEvent.username) //onlineUsers to map!
+          this.chats[i].users.set(wsEvent.username, true)
           message.message += ' online'
         } else if (wsEvent.userOffline) {
-          this.chats[i].onlineUsers = this.chats[i].onlineUsers.filter(username => username !== wsEvent.username)
+          this.chats[i].users.set(wsEvent.username, false)
           message.message += ' offline'
         } else {
-          this.chats[i].users.push(wsEvent.username)
+          this.chats[i].users.set(wsEvent.username, false)
           message.message += ' added'
         }
         this.chats[i].messages.push(message)

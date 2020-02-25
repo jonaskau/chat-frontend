@@ -12,11 +12,12 @@
             <p>{{message.message}}</p>
         </li>
     </ul>
-    <ul id="chatName">
-        <li
-            *ngFor="let user of chat.onlineUsers"
-            >
-            <span>{{user}}</span>
+    <div id="userListBackground"></div>
+    <ul id="userList">
+        <li *ngFor="let user of chat.users| keyvalue; let i = index ">
+            <span *ngIf="i > 0">, </span>
+            <span>{{user.key}}</span>
+            <div *ngIf="user.value"></div>
         </li>
     </ul>
     <button id="addUsers" class="chat-button" (click)="toggleEditChat(true)">Add users</button>

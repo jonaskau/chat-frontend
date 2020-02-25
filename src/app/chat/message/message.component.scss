@@ -41,7 +41,15 @@
     }
 }
 
-#chatName {
+#userListBackground {
+    position: absolute;
+    top: 0;
+    right: calc(var(--space-width) + var(--button-right-width));
+    left: 0;
+    height: calc(var(--bar-height) - 10px);
+    background-color: var(--element-color-1);
+}
+#userList {
     position: absolute;
     overflow-x: scroll;
     overflow-y: hidden;
@@ -50,20 +58,30 @@
     left: 0;
     height: var(--bar-height);
     list-style-type: none;
-    background-color: var(--element-color-1);
-    font-size: 20px;
-    line-height: var(--bar-height);
-    padding-left: 10px;
+    line-height: calc(var(--bar-height) - 10px);
     color: var(--font-color-1);
+    padding-left: var(--space-width);
+    padding-right: var(--space-width);
 
     li {
-        display: inline-block;
-        padding-right: var(--space-width);
+        display: inline;
+        white-space: nowrap;
+        span {
+            font-size: 17px;
+        }
+        div {
+            display: inline-block;
+            margin-left: 3px;
+            background-color: green;
+            height: 12px;
+            width: 12px;
+            border-radius: 6px;
+        }
     }
 }
 
-#chatName::-webkit-scrollbar {
-    width: 0;
+#userList::-webkit-scrollbar {
+    height: 6px;
 }
 
 #addUsers {

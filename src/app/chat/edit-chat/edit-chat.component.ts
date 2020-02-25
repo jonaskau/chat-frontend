@@ -43,7 +43,7 @@ export class EditChatComponent implements OnInit {
         return usernames.filter(username => {
           return username !== this.authService.getUsername() && 
             !this.users.value.some(entry => entry == username) &&
-            !this.chat.users.some(entry => entry == username)
+            !this.chat.users.has(username)
         })
       })
     )

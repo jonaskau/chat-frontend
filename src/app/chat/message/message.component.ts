@@ -16,7 +16,7 @@ export class MessageComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   @ViewChild('messageList', {static: false}) private messageList: ElementRef
   
-  chat: Chat = {id: "", name: "", users: [], onlineUsers: [], messages: []}
+  chat: Chat = {id: "", name: "", users: new Map<string, boolean>(), messages: []}
   username = ""
   scrollDown = false
   editChat = false

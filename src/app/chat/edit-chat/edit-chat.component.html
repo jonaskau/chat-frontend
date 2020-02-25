@@ -20,8 +20,8 @@
         </label>
         <div class="editAddChatFlexBox">
             <ul>
-                <li *ngFor="let user of chat.users">
-                    <span>{{user}}</span>
+                <li *ngFor="let user of chat.users | keyvalue">
+                    <span>{{user.key}}</span>
                 </li>
                 <li *ngFor="let user of users.value; let i = index">
                     <span>{{user}}</span>
