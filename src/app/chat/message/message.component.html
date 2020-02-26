@@ -1,7 +1,7 @@
 <div id="messageArea">
     <ul id="messageList" #messageList>
         <li class="float-middle">
-            <button class="button-2" (click)="loadMore()">load more</button>
+            <button class="basic-button bg-2" (click)="loadMore()">load more</button>
         </li>
         <li
             class="message"
@@ -12,6 +12,7 @@
             <p>{{message.message}}</p>
         </li>
     </ul>
+    <div id="userListBorder"></div>
     <div id="userListBackground"></div>
     <ul id="userList">
         <li *ngFor="let user of chat.users| keyvalue; let i = index ">

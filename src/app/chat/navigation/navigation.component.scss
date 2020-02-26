@@ -14,6 +14,16 @@
 
 #addChat {
     top: 0;
+    transition: width 0.5s;
+}
+
+#logout {
+    bottom: 0;
+    transition: width 0.5s;
+}
+
+#addChat:hover, #logout:hover {
+    width: calc(100% - 15px);
 }
 
 #chatList {
@@ -34,24 +44,12 @@
         line-height: 50px;
         padding-left: 10px;
         margin-top: var(--space-width);
-        background-color: rgba(216, 195, 165, 0.6);
+        background-color: var(--element-color-2-75);
+        transition: width 0.5s;
     }
-
     li:hover {
-        cursor: pointer;
+        width: calc(100% - 10px);
     }
-
-    li:focus {
-        outline-width: 0;
-    }
-}
-
-#logout {
-    bottom: 0;
-}
-
-.selected {
-    background-color: var(--element-color-1) !important;
 }
 
 .first {

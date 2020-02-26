@@ -8,7 +8,7 @@
         <label class="editAddChatFlexBox">
             <span>chatname:</span>
             <input 
-                class="input-2"
+                class="basic-input bg-3"
                 type="text"
                 formControlName="name"
                 autocomplete="off">
@@ -17,7 +17,7 @@
             <span>username search:</span>
             <input
                 #searchBox
-                class="input-2"
+                class="basic-input bg-3"
                 type="text"
                 autocomplete="off"
                 (input)="search(searchBox.value)" />
@@ -36,6 +36,6 @@
                 </li>
             </ul>
         </div>
-        <button type="submit" class="editAddChatSubmit button-2">Add chat</button>
+        <button type="submit" class="editAddChatSubmit basic-button bg-3">Add chat</button>
     </form>
 </div>

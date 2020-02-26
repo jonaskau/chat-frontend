@@ -41,6 +41,15 @@
     }
 }
 
+#userListBorder {
+    position: absolute;
+    top: 0;
+    right: calc(var(--space-width) + var(--button-right-width));
+    left: 0;
+    height: var(--bar-height);
+    border: solid var(--space-width) var(--element-color-1);
+}
+
 #userListBackground {
     position: absolute;
     top: 0;
@@ -49,19 +58,18 @@
     height: calc(var(--bar-height) - 10px);
     background-color: var(--element-color-1);
 }
+
 #userList {
     position: absolute;
     overflow-x: scroll;
     overflow-y: hidden;
     top: 0;
-    right: calc(var(--space-width) + var(--button-right-width));
-    left: 0;
-    height: var(--bar-height);
+    right: calc(2* var(--space-width) + var(--button-right-width));
+    left:  var(--space-width);
+    height: calc(var(--bar-height) - var(--space-width));
     list-style-type: none;
     line-height: calc(var(--bar-height) - 10px);
     color: var(--font-color-1);
-    padding-left: var(--space-width);
-    padding-right: var(--space-width);
 
     li {
         display: inline;
@@ -81,7 +89,19 @@
 }
 
 #userList::-webkit-scrollbar {
-    height: 6px;
+    height: 5px;
+}
+
+#userList::-webkit-scrollbar-track {
+    background: var(--element-color-1-50); 
+}
+   
+#userList::-webkit-scrollbar-thumb {
+    background: var(--element-color-2); 
+}
+
+#userList::-webkit-scrollbar-thumb:hover {
+    background: var(--element-color-6); 
 }
 
 #addUsers {
@@ -90,6 +110,7 @@
     right: 0;
     width: var(--button-right-width);
     height: var(--bar-height);
+    transition: width 0.5s;
 }
 
 #inputArea {
@@ -102,7 +123,7 @@
     input {
         width: 100%;
         height: var(--bar-height);
-        background-color: var(--element-color-2-50);
+        background-color: var(--element-color-1-50);
         border: solid 5px var(--element-color-1);
         padding-left: 5px;
     }
@@ -118,4 +139,9 @@
     bottom: 0;
     width: var(--button-right-width);
     height: var(--bar-height);
+    transition: width 0.5s;
+}
+
+#addUsers:hover, #send:hover {
+    width: calc(var(--button-right-width) - 15px);
 }

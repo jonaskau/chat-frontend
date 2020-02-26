@@ -3,7 +3,8 @@
         <li 
             *ngFor="let chat of chats; let i = index" 
             [routerLink]="['/chat', chat.id]"
-            [class.selected]="chat.id === selectedChatId"
+            class="cursor outline-none"
+            [class.bg-2]="chat.id === selectedChatId"
             [class.first]="i === 0">
             <span>{{chat.name}}</span>
         </li>

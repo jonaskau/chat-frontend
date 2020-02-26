@@ -9,16 +9,17 @@
 #message {
     position: absolute;
     left: 50%;
-    transform: translate(-55%, 0);
+    top: 50%;
+    transform: translate(-55%, -60%);
     font-family: 'Caveat';
     color: var(--font-color);
     text-align: center;
 
     h1 {
-        font-size: 12vw;
+        font-size: 18vw;
     }
 
     h2 {
-        font-size: 4.6vw;
+        font-size: 6.2vw;
     }
 }
