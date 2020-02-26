@@ -163,14 +163,12 @@ body {
     font-family: 'Montserrat', sans-serif;
     font-size: 25px;
     color: var(--font-color-1);
-    transition: width 0.5s;
 }
 .chat-button:focus {
     outline-width: 0;
 }
 .chat-button:hover {
     cursor: pointer;
-    width: calc(100% - 25px);
 }
 
 .outline-none:focus {
