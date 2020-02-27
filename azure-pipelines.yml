@@ -25,5 +25,5 @@ steps:
     ConnectionType: 'AzureRM'
     azureSubscription: 'Azure für Bildungseinrichtungen(76968ea1-8fd1-4a02-a960-cf9b0c53a9b1)'
     appType: 'webApp'
-    WebAppName: 'jonas-chat-frontend'
+    WebAppName: 'jonas-chat'
     packageForLinux: '$(System.DefaultWorkingDirectory)/dist'
