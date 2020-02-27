@@ -10,7 +10,8 @@ import { ChatRoutes } from './chat/chat.routes';
 const routes: Routes = [
   { path: "", redirectTo: '/chat', pathMatch: 'full'},
   { path: "chat", component: ChatComponent, children: ChatRoutes, canActivate: [ChatGuard]},
-  { path: "authenticate", component: AuthenticationComponent, canActivate: [AuthGuard]}
+  { path: "authenticate", component: AuthenticationComponent, canActivate: [AuthGuard]},
+  { path: "**", redirectTo: '/chat', pathMatch: 'full'}
 ];
 
 @NgModule({
