@@ -4,7 +4,7 @@ import { Observable, of } from 'rxjs';
 export class Backend {
 
     //private host = 'localhost:9000/';
-    private host = 'https://jonas-chat-api.azurewebsites.net/';
+    private host = 'jonas-chat-api.azurewebsites.net/';
     protected Url = `http://${this.host}`;
     protected wsUrl = `ws://${this.host}createWSConnection`;
 
