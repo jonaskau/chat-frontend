@@ -1,12 +1,11 @@
-import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 
 export class Backend {
 
     //private host = 'localhost:9000/';
     private host = 'jonas-chat-api.azurewebsites.net/';
-    protected Url = `http://${this.host}`;
-    protected wsUrl = `ws://${this.host}createWSConnection`;
+    protected Url = `https://${this.host}`;
+    protected wsUrl = `wss://${this.host}createWSConnection`;
 
     constructor() {}
 
