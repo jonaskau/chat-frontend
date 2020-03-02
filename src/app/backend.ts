@@ -5,7 +5,7 @@ export class Backend {
     //private host = 'localhost:9000/';
     private host = 'jonas-chat-api.azurewebsites.net/';
     protected Url = `https://${this.host}`;
-    protected wsUrl = `wss://${this.host}createWSConnection`;
+    protected wsUrl = `ws://${this.host}createWSConnection`;
 
     constructor() {}
 
