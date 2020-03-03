@@ -15,8 +15,10 @@ export class NavigationComponent implements OnInit, OnDestroy {
 
   chats: Chat[]
   selectedChatId: string = ""
+  showNavigation = false
 
   private currentChatSubscription: Subscription
+  private showNavigationOrChatSubscription: Subscription
 
   constructor(
     private authService: AuthService, 
@@ -27,14 +29,24 @@ export class NavigationComponent implements OnInit, OnDestroy {
     this.currentChatSubscription = this.chatService.getCurrentChatIdBehaviorSubject().subscribe(id => {
       this.selectedChatId = id
     })
+    
+    this.showNavigationOrChatSubscription = 
+    this.chatService.getShowNavigationOrChatBehaviorSubject().subscribe(value => {
+      this.showNavigation = value
+    })
   }
 
   ngOnDestroy(): void {
     this.currentChatSubscription.unsubscribe()
+    this.showNavigationOrChatSubscription.unsubscribe()
   }
 
   openAddChat() {
-    this.OpenAddChat.emit(true);
+    this.OpenAddChat.emit(true)
+  }
+
+  closeNavigation() {
+    this.chatService.getShowNavigationOrChatBehaviorSubject().next(false)
   }
 
   logout(){

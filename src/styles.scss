@@ -64,7 +64,7 @@ body {
     --element-color-4: rgb(255, 106, 92);
     --element-color-5: rgb(204, 223, 203);
     --element-color-6: rgb(100,100,100);
-    --font-color-1: black;
+    --font-color-1: rgb(40,40,40);
     --font-color-2: rgb(121,90,58);
     --font-color-3: rgb(121,90,58);
     --background-url: url("/assets/pattern3.jpg");
@@ -180,6 +180,7 @@ body {
 
 .editAddChat {
     position: fixed;
+    overflow-y: auto;
     top: 0;
     right: 0;
     bottom: 0;
@@ -198,12 +199,12 @@ body {
     border: none;
 }
 .editAddChatForm {
-    position: relative;
-    position: fixed;
+    position: absolute;
     width: var(--form-width);
     height: var(--form-width);
     top: calc(50% - var(--form-width) * 0.5);
     left: calc(50% - var(--form-width) * 0.5);
+    margin: var(--space-width) 0 var(--space-width) 0;
     background: var(--element-color-1);
 }
 .editAddChatFlexBox {
@@ -258,6 +259,27 @@ body {
     left: var(--space-width);
     width: calc(100% - 2* var(--space-width));
     height: 30px;
+}
+
+.show {
+    display: block;
+}
+
+.showImportant {
+    display: block !important;
+}
+
+@media only screen and (max-width: 600px) {
+    .show {
+        display: none;
+    }
+    
+    .editAddChatForm {
+        width: calc(100% - 2 * var(--space-width));
+        top: 70px;
+        right: var(--space-width);
+        left: var(--space-width);
+    }
 }
 
 @media only screen and (max-width: 500px) {

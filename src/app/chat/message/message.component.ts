@@ -20,9 +20,11 @@ export class MessageComponent implements OnInit, OnDestroy, AfterViewChecked {
   username = ""
   scrollDown = false
   editChat = false
+  showChat = false
   
   private chatsReceivedSubscribtion: Subscription
   private scrollMessageListSubscribtion: Subscription
+  private showNavigationOrChatSubscription: Subscription
 
   messageForm = this.fb.group({
     messageInput: ["", Validators.required]
@@ -60,6 +62,11 @@ export class MessageComponent implements OnInit, OnDestroy, AfterViewChecked {
         ).subscribe()
       }
     })
+    
+    this.showNavigationOrChatSubscription = 
+    this.chatService.getShowNavigationOrChatBehaviorSubject().subscribe(value => {
+      this.showChat = !value
+    })
   }
   
   ngAfterViewChecked(): void {
@@ -72,6 +79,7 @@ export class MessageComponent implements OnInit, OnDestroy, AfterViewChecked {
   ngOnDestroy(): void {
     this.scrollMessageListSubscribtion.unsubscribe()
     this.chatsReceivedSubscribtion.unsubscribe()
+    this.showNavigationOrChatSubscription.unsubscribe()
   }
 
   sendMessage(): void {
@@ -83,6 +91,10 @@ export class MessageComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.scrollDown = false
     const lastDate = this.chat.messages[0].date
     this.chatService.receiveMessagesFromDB(this.chat, 5, lastDate)
+  }
+
+  openNavigation() {
+    this.chatService.getShowNavigationOrChatBehaviorSubject().next(true)
   }
   
   toggleEditChat(value: boolean) {

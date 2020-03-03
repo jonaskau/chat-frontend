@@ -16,10 +16,37 @@
     text-align: center;
 
     h1 {
-        font-size: 18vw;
+        font-size: 16vw;
     }
 
     h2 {
-        font-size: 6.2vw;
+        font-size: 5.8vw;
+    }
+}
+
+#openNavigation {
+    display: none;
+}
+
+@media only screen and (max-width: 600px) {
+    #welcome {
+        left: 0;
+    }
+
+    #openNavigation {
+        display: block;
+        position: absolute;
+        width: var(--bar-height);
+        top: var(--space-width);
+        left: var(--space-width);
+    }    
+
+    #message {
+        h1 {
+            font-size: 22vw;
+        }
+        h2 {
+            font-size: 8vw;
+        }
     }
 }

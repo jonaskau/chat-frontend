@@ -89,7 +89,7 @@
 }
 
 #userList::-webkit-scrollbar {
-    height: 5px;
+    height: 6px;
 }
 
 #userList::-webkit-scrollbar-track {
@@ -111,6 +111,10 @@
     width: var(--button-right-width);
     height: var(--bar-height);
     transition: width 0.5s;
+}
+
+#addUsersSmall {
+    display: none;
 }
 
 #inputArea {
@@ -142,6 +146,81 @@
     transition: width 0.5s;
 }
 
+#sendSmall {
+    display: none;
+}
+
 #addUsers:hover, #send:hover {
     width: calc(var(--button-right-width) - 15px);
+}
+
+#openNavigation {
+    display: none;
+}
+
+@media only screen and (max-width: 800px) {
+    #addUsers, #send {
+        display: none;
+    }
+
+    #addUsersSmall, #sendSmall {
+        display: block;
+        position: absolute;
+        right: 0;
+        width: var(--bar-height);
+        height: var(--bar-height);
+        transition: width 0.5s;
+    }
+
+    #addUsersSmall {
+        top: 0;
+    }
+
+    #sendSmall {
+        bottom: 0;
+    }
+
+    #userList {
+        right: calc(var(--bar-height) + 2 * var(--space-width));
+    }
+
+    #userListBorder, #userListBackground, #inputArea {
+        right: calc(var(--bar-height) + var(--space-width));
+    }
+
+    #messageList {
+        padding-right: calc(10px + var(--space-width));
+        padding-left: 10px;
+    
+        .message {
+            width: 80%;
+        }
+    
+        .float-middle {
+            width: 60%;
+        }
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    #messageArea {
+        left: var(--space-width);
+    }
+
+    #openNavigation {
+        display: block;
+        position: absolute;
+        width: var(--bar-height);
+        top: 0;
+        left: 0;
+    }
+
+    #userList {
+        left: calc(2 * var(--space-width) + var(--bar-height));
+    }
+
+    #userListBorder, #userListBackground {
+        left: calc(var(--space-width) + var(--bar-height));
+    }
+    
 }

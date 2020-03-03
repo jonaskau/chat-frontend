@@ -19,6 +19,7 @@ export class ChatService extends Backend {
   private chatsReceivedBehaviorSubject = new BehaviorSubject<boolean>(false)
   private currentChatIdBehaviorSubject = new BehaviorSubject<string>("")
   private scrollMessageListSubject = new BehaviorSubject<boolean>(false)
+  private showNavigationOrChatBehaviorSubject = new BehaviorSubject<boolean>(true)
   private chatRoomAmountAtBeginning: number
 
   constructor(
@@ -45,6 +46,10 @@ export class ChatService extends Backend {
 
   getCurrentChatIdBehaviorSubject(): Subject<string> {
     return this.currentChatIdBehaviorSubject
+  }
+
+  getShowNavigationOrChatBehaviorSubject() {
+    return this.showNavigationOrChatBehaviorSubject
   }
 
   getScrollMessageListObservable(): Observable<any> {

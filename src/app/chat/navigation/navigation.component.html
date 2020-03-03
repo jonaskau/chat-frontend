@@ -1,4 +1,4 @@
-<div id="navigation">
+<div class="show" [class.showImportant]="showNavigation" id="navigation">
     <ul id="chatList">
         <li 
             *ngFor="let chat of chats; let i = index" 
@@ -9,6 +9,7 @@
             <span>{{chat.name}}</span>
         </li>
     </ul>
+    <button id="closeNavigation" class="chat-button" (click)="closeNavigation()">X</button>
     <button id="addChat" class="chat-button" (click)="openAddChat()">Create chat</button>
     <button id="logout" class="chat-button" (click)="logout()">Log out</button>
 </div>

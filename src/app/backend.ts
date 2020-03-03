@@ -4,8 +4,9 @@ import { environment } from '../environments/environment';
 export class Backend {
 
     private host = environment.backendUrl
-    protected Url = `https://${this.host}`
-    protected wsUrl = `wss://${this.host}createWSConnection`
+    private s = environment.s
+    protected Url = `http${this.s}://${this.host}`
+    protected wsUrl = `ws${this.s}://${this.host}createWSConnection`
 
     constructor() {}
 

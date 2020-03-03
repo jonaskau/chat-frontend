@@ -55,3 +55,20 @@
 .first {
     margin-top: 0 !important;
 }
+
+@media only screen and (max-width: 600px) {
+    #addChat {
+        width: calc(100% - var(--space-width) - var(--bar-height));
+        left: calc(var(--space-width) + var(--bar-height));
+    }
+    #addChat:hover {
+        width: calc(100% - var(--space-width) - var(--bar-height) - 15px);
+    }
+
+    #closeNavigation {
+        position: absolute;
+        width: var(--bar-height);
+        top: 0;
+        left: 0;
+    }
+}
