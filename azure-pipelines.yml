@@ -18,6 +18,7 @@ steps:
 - script: |
     npm install
     npm run build
+    ng build --prod
   displayName: 'npm install and build'
 
 # Publish Artifacts
