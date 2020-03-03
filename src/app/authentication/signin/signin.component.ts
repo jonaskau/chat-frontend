@@ -31,7 +31,7 @@ export class SigninComponent implements OnInit {
     })
   }
 
-  @HostListener('window:resize', ['$event'])
+  @HostListener('window:resize')
   onResize() {
     if (window.innerWidth <= 500) {
       this.showSignUpLink = true
