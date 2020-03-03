@@ -62,7 +62,7 @@ body {
     --element-color-3-75: rgba(var(--element-color-3-var), 0.75);
     --element-color-3-50: rgba(var(--element-color-3-var), 0.5);
     --element-color-4: rgb(255, 106, 92);
-    --element-color-5: #ccdfcb;
+    --element-color-5: rgb(204, 223, 203);
     --element-color-6: rgb(100,100,100);
     --font-color-1: black;
     --font-color-2: rgb(121,90,58);
@@ -78,7 +78,7 @@ body {
 }
 
 .header-authenticate {
-    font-size: 12vw;
+    font-size: 11vw;
     text-align: center;
 }
 .form-authenticate {
@@ -258,4 +258,10 @@ body {
     left: var(--space-width);
     width: calc(100% - 2* var(--space-width));
     height: 30px;
+}
+
+@media only screen and (max-width: 500px) {
+    .header-authenticate {
+        font-size: 22vw;
+    }
 }

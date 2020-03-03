@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { Validators, FormBuilder } from '@angular/forms';
 import { AuthService } from '../auth.service';
 
@@ -9,7 +9,8 @@ import { AuthService } from '../auth.service';
 })
 export class SigninComponent implements OnInit {
 
-  wrongCredentials = false;
+  wrongCredentials = false
+  showSignUpLink = false
 
   signInForm = this.fb.group({
     username: ['', Validators.required],
@@ -21,12 +22,26 @@ export class SigninComponent implements OnInit {
     private authService: AuthService) { }
 
   ngOnInit() {
+    this.onResize()
     this.authService.getIsAuthenticatedObservable().subscribe(isAuth => {
-      this.wrongCredentials = !isAuth;
+      this.wrongCredentials = !isAuth
       setTimeout(() => {
-        this.wrongCredentials = false;
+        this.wrongCredentials = false
       }, 2000)
     })
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    if (window.innerWidth <= 500) {
+      this.showSignUpLink = true
+    } else {
+      this.showSignUpLink = false
+    }
+  }
+
+  scrollToSignUp() {
+    window.scrollTo({top: window.innerHeight, left: 0, behavior: 'smooth'})
   }
 
   onSubmit() {

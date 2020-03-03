@@ -29,4 +29,12 @@
         type="submit" 
         [disabled]="!signInForm.valid">sign in</button>
     <p *ngIf="wrongCredentials" class="red-color"><br>Wrong credentials!</p>
+    <br><br>
+    <button 
+        class="button-authenticate" 
+        type="button" 
+        (click)="scrollToSignUp()"
+        *ngIf="showSignUpLink">
+        go to sign up ...
+    </button>
 </form>

@@ -9,6 +9,7 @@ export class AuthenticationComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() { }
-
+  ngOnInit() {
+    console.log(window.innerWidth)
+  }
 }

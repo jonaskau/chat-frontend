@@ -1,6 +1,7 @@
 .flex {
-    position: fixed;
+    position: absolute;
     display: flex;
+    flex-wrap: wrap;
     top: 0;
     right: 0;
     bottom: 0;
@@ -9,4 +10,11 @@
 
 .half-box {
     width: 50%;
+    height: 100%;
+}
+
+@media only screen and (max-width: 500px) {
+    .half-box {
+        width: 100%;
+    }
 }
